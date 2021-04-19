@@ -1,5 +1,6 @@
 package io.labforward.api.utils;
 
+import io.labforward.api.models.Error;
 import io.labforward.api.models.Pager;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;

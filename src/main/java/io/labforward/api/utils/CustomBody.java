@@ -1,12 +1,15 @@
 package io.labforward.api.utils;
 
 import io.labforward.api.models.Pager;
+import io.labforward.api.models.Error;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
+ * CustomBody is a custom ResponseEntity that adds extra properties to a response payload
+ *
  * Created by: Robert Wilson
  * Date:  19/04/2021
  * Project: api

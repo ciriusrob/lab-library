@@ -37,6 +37,13 @@ public class ItemService implements IBaseService<Item>
 
     private AttributeService attributeService;
 
+    /**
+     * Constructor
+     *
+     * @param repository       The repository
+     * @param itemValueService The ItemValue service
+     * @param attributeService The Attribute service
+     */
     @Autowired
     @Lazy
     public ItemService( IItemRepository repository,
@@ -48,18 +55,36 @@ public class ItemService implements IBaseService<Item>
         this.attributeService = attributeService;
     }
 
+    /**
+     * Fetching a paged collection of Attributes
+     *
+     * @param pageable          The pageable object with page, pageSize etc. The repository uses this to make the query pageable (limit, offset, orderBy etc)
+     * @return Page<Item>
+     */
     @Override
     public Page<Item> all( Pageable pageable )
     {
         return repository.findAll(pageable);
     }
 
+    /**
+     * Fetch a single Item by ID
+     *
+     * @param id                The ID of the Item to fetch
+     * @return Optional<Item>   An optional Item
+     */
     @Override
     public Optional<Item> single( long id )
     {
         return repository.findById(id);
     }
 
+    /**
+     * Saves a new Item
+     *
+     * @param entity    The Item to be saved
+     * @return Item     The saved Item with its ID
+     */
     @Override
     public Item save( Item entity )
     {
@@ -81,6 +106,13 @@ public class ItemService implements IBaseService<Item>
         return savedItem;
     }
 
+    /**
+     * Updates an existing Item Object (Since there's no Patch, the update takes into account null values from the client
+     * before updating so it doesn't override the existing. I Patch should do this better)
+     *
+     * @param   entity          The Item to be updated
+     * @return  Item            The updated Item
+     */
     @Override
     public Item update( Item entity )
     {
@@ -90,11 +122,11 @@ public class ItemService implements IBaseService<Item>
 
             final Item item = existingItem.get();
 
-            item.setId( entity.getId() );
+            item.setId(entity.getId());
 
-            item.setCategory( entity.getCategory() != null ? entity.getCategory() : item.getCategory() );
+            item.setCategory(entity.getCategory() != null ? entity.getCategory() : item.getCategory());
 
-            item.setName(StringUtils.hasLength( entity.getName() ) ? entity.getName() : item.getName());
+            item.setName(StringUtils.hasLength(entity.getName()) ? entity.getName() : item.getName());
 
             return repository.save(item);
         }
@@ -102,11 +134,26 @@ public class ItemService implements IBaseService<Item>
         return null;
     }
 
+    /**
+     * Gets the all Items by category ID
+     *
+     * @param   categoryId    The category ID
+     * @param   pageable      The pageable object with page, pageSize etc. The repository uses this to make the query
+     *                        pageable (limit, offset, orderBy etc)
+     * @return  Page<Item>    A paged collection of Items
+     */
     public Page<Item> getAllByCategoryId( long categoryId, Pageable pageable )
     {
         return repository.findAllByCategoryId(categoryId, pageable);
     }
 
+    /**
+     * Validate ItemValues (To save an Item, the values of the Item should correspond to the defined attributes of the category )
+     *
+     * @param categoryAttributeIds An array of category attribute ids
+     * @param modelItemValues      A collection of ItemValues from the client
+     * @return List<ItemValue>     A collection of validated ItemValue entities
+     */
     public List<ItemValue> validateItemValues( long[] categoryAttributeIds, List<ItemRequestDto.ItemValueRequestDto> modelItemValues )
     {
         return modelItemValues.stream().map(iv -> {
@@ -131,6 +178,11 @@ public class ItemService implements IBaseService<Item>
         }).collect(Collectors.toList());
     }
 
+    /**
+     * Flattens an ItemValue into  a DTO (It's a combination of some Category attributes with the actual Item value)
+     *
+     * @return the item value for item dto property map
+     */
     public PropertyMap<ItemValue, ItemValueResponseDto> getItemValueForItemDtoPropertyMap()
     {
         return new PropertyMap<ItemValue, ItemValueResponseDto>()
