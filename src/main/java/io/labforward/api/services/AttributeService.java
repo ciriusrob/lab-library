@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by: Robert Wilson
@@ -70,6 +71,7 @@ public class AttributeService implements IBaseService<Attribute>
     @Override
     public Attribute save( Attribute entity )
     {
+        entity.setKey( entity.getKey().toLowerCase().trim() );
         return repository.save(entity);
     }
 
@@ -81,7 +83,10 @@ public class AttributeService implements IBaseService<Attribute>
      */
     public Set<Attribute> saveAll( Set<Attribute> entities )
     {
-        final List<Attribute> saved = repository.saveAll(entities);
+        final List<Attribute> saved = repository.saveAll(entities.stream().map( attribute -> {
+            attribute.setKey( attribute.getKey().toLowerCase().trim() );
+            return attribute;
+        }).collect(Collectors.toList()));
 
         return new HashSet<>(saved);
     }
