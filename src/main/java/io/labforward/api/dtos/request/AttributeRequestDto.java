@@ -1,6 +1,8 @@
 package io.labforward.api.dtos.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -12,6 +14,8 @@ import java.io.Serializable;
  * Package: io.labforward.api.dtos.request
  * Class: AttributeRequestDto
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class AttributeRequestDto implements Serializable
 {

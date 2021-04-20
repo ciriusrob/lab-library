@@ -91,7 +91,7 @@ public class CategoryController
 
     /**
      *
-     * Gets the category items
+     * Gets paged category items
      *
      * @param  categoryId           The ID of the category
      * @param  page                 The page number of the pagination step
