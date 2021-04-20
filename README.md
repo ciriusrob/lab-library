@@ -77,10 +77,10 @@ The request body for creating a *Category* is as below
 
 We can either use swagger or cURL to create a Category
 <pre>
-$ curl -X POST "http://localhost:9090/api/v1/categories"  \
-   	-H "accept: application/json" \ 
-   	-H "Content-Type: application/json"  \
-   	-d "{ \"name\": \"DEVICE\", \"description\": \"Device Category\", \"attributes\": [ { \"key\": \"size\", \"label\": \"Size\", \"valueType\": \"String\" }, { \"key\": \"weight\", \"label\": \"Weight\", \"valueType\": \"String\" }, { \"key\": \"color\", \"label\": \"Color\", \"valueType\": \"String\" } ]}"
+$ curl -X POST "http://localhost:9090/api/v1/categories"\
+   	-H "accept: application/json"\
+    	-H "Content-Type: application/json"\
+    	-d '{ "name": "DEVICE", "description": "Device Category", "attributes": [ { "key": "size", "label": "Size", "valueType": "String" }, { "key": "weight", "label": "Weight", "valueType": "String" }, { "key": "color", "label": "Color", "valueType": "String" } ]}'
 </pre>
 
 ## Creating An Item In A Category
@@ -109,9 +109,10 @@ The Item request payload looks like the JSON object below.
 We can use swagger or cURL to create an *Item* in a *Category* 
 To use cURL execute the following command from your terminal (*unix) or command prompt if you are on Windows
 <pre>
-curl -X POST "http://localhost:9090/api/v1/items" \ 
-	-H "accept: application/json" -H "Content-Type: application/json" \ 
-	-d "{ \"name\": \"Test Tube\", \"categoryId\": 4, \"itemValues\": [ { \"attributeId\": 2, \"value\": \"10x200\" }, { \"attributeId\": 3, \"value\": \"Transparent\" }, { \"attributeId\": 1, \"value\": \"24.47 g\" } ] }"
+curl -X POST "http://localhost:9090/api/v1/items"\
+	-H "accept: application/json"\
+	-H "Content-Type: application/json"\
+	-d '{ "name": "Test Tube", "categoryId": 4, "itemValues": [ { "attributeId": 2, "value": "10x200" }, { "attributeId": 3, "value": "Transparent" }, { "attributeId": 1, "value": "24.47 g" } ] }'
 </pre>
  
 
@@ -149,10 +150,10 @@ The id references the itemValue ID.
 
 To update using a cURL command
 <pre>
-curl -X PUT "http://localhost:9090/api/v1/items/5" \ 
-	-H "accept: application/json" \ 
-	-H "Content-Type: application/json" \ 
-	-d "{ \"itemValues\": [ { \"id\": 6, \"value\": \"20x120 mm\" }, { \"id\": 7, \"value\": \"Semi Transparent\" } ], \"name\": \"Updated Test Tube\"}"
+curl -X PUT "http://localhost:9090/api/v1/items/5"\
+	-H "accept: application/json"\
+	-H "Content-Type: application/json"\
+	-d '{ "itemValues": [ { "id": 6, "value": "20x120 mm" }, { "id": 7, "value": "Semi Transparent" } ], "name": "Updated Test Tube"}'
 </pre>
 
 Again you can use swagger to perform all these actions
