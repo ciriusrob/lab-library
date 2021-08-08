@@ -51,7 +51,7 @@ The applications should be up and running. Visit `http://localhost:9090/swagger-
 
 ## Creating A Category With Attributes
 The request body for creating a *Category* is as below
-<pre>    
+```json    
  {
    "name": "DEVICE",
    "description": "Device Category",
@@ -73,20 +73,20 @@ The request body for creating a *Category* is as below
      }
    ]
 }
-</pre>
+```
 
 We can either use swagger or cURL to create a Category
-<pre>
+```bash
 $ curl -X POST "http://localhost:9090/api/v1/categories"\
    	-H "accept: application/json"\
     	-H "Content-Type: application/json"\
     	-d '{ "name": "DEVICE", "description": "Device Category", "attributes": [ { "key": "size", "label": "Size", "valueType": "String" }, { "key": "weight", "label": "Weight", "valueType": "String" }, { "key": "color", "label": "Color", "valueType": "String" } ]}'
-</pre>
+```
 
 ## Creating An Item In A Category
 Placeholder
 The Item request payload looks like the JSON object below.
-<pre>
+```json
 {
     "name": "Test Tube",
     "categoryId": 4,
@@ -105,15 +105,15 @@ The Item request payload looks like the JSON object below.
       }
     ]
   }
-</pre>
+```
 We can use swagger or cURL to create an *Item* in a *Category* 
 To use cURL execute the following command from your terminal (*unix) or command prompt if you are on Windows
-<pre>
+```bash
 curl -X POST "http://localhost:9090/api/v1/items"\
 	-H "accept: application/json"\
 	-H "Content-Type: application/json"\
 	-d '{ "name": "Test Tube", "categoryId": 4, "itemValues": [ { "attributeId": 2, "value": "10x200" }, { "attributeId": 3, "value": "Transparent" }, { "attributeId": 1, "value": "24.47 g" } ] }'
-</pre>
+```
  
 
 ## Getting Items In A Category
@@ -124,15 +124,15 @@ You can add the pagination parameters to control how many items are fetch per pa
 example below:
 
 `http://localhost:9090/api/v1/categories/{categoryId}/items?page=1&pageSize=10&properties=name&direction=ASC`
-<pre> 
+```bash
 curl -X GET "http://localhost:9090/api/v1/categories/4/items" -H "accept: application/json"
-</pre>
+```
 You can also use swagger to get items under a particular category
 
 ## Updating An Item 
 To update an *Item* in a Category, we'll need to call the PUT endpoint with the request payload below.
 The id references the itemValue ID.
-<pre>
+```json
 {
   "itemValues": [
     {
@@ -146,14 +146,14 @@ The id references the itemValue ID.
   ],
   "name": "Updated Test Tube"
 }
-</pre> 
+```
 
 To update using a cURL command
-<pre>
+```bash
 curl -X PUT "http://localhost:9090/api/v1/items/5"\
 	-H "accept: application/json"\
 	-H "Content-Type: application/json"\
 	-d '{ "itemValues": [ { "id": 6, "value": "20x120 mm" }, { "id": 7, "value": "Semi Transparent" } ], "name": "Updated Test Tube"}'
-</pre>
+```
 
 Again you can use swagger to perform all these actions
